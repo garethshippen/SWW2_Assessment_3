@@ -1,0 +1,103 @@
+DO 
+$$
+DECLARE r record;
+DECLARE test_date DATE := '2023-04-10';
+BEGIN
+FOR r IN select * from constructionqueue natural join buildingcost where (start_date + build_time) > test_date
+LOOP
+EXECUTE 'INSERT INTO basebuilding VALUES(r.building_id, r.base_id);' 
+EXECUTE 'DELETE FROM constructionqueue WHERE construction_id =' || r.construction_id;
+END LOOP;
+END$$
+
+build	base
+3	5
+4	2
+4	5
+5	2
+
+
+
+DO 
+$$
+DECLARE r record;
+DECLARE test_date DATE := '2023-04-10';
+BEGIN
+FOR r IN select * from constructionqueue natural join buildingcost where (start_date + build_time) > test_date
+LOOP
+EXECUTE 'INSERT INTO basebuilding(building_id, base_id) VALUES(%, %)',r.building_id, r.base_id; 
+EXECUTE 'DELETE FROM constructionqueue WHERE construction_id = %',r.construction_id;
+END LOOP;
+END$$
+
+
+
+DO 
+$$
+DECLARE r record;
+DECLARE test_date DATE := '2023-04-10';
+BEGIN
+FOR r IN select * from constructionqueue natural join buildingcost where (start_date + build_time) > test_date
+LOOP
+INSERT INTO basebuilding(building_id, base_id) VALUES(%, %),r.building_id, r.base_id; 
+DELETE FROM constructionqueue WHERE construction_id = %,r.construction_id;
+END LOOP;
+END$$
+
+
+!!!!!!!!!!!!!!!!!
+DO 
+$$
+DECLARE r record;
+DECLARE test_date DATE := '2023-04-10';
+BEGIN
+FOR r IN select * from constructionqueue natural join buildingcost where (start_date + build_time) > test_date
+LOOP
+INSERT INTO basebuilding(building_id, base_id) VALUES(r.building_id, r.base_id); 
+DELETE FROM constructionqueue WHERE construction_id = r.construction_id;
+END LOOP;
+END$$
+!!!!!!!!!!!!!!!!!!
+
+
+
+
+
+
+
+
+if the building hasn't finished by test_date, remove it from queue and add it to basebuilding
+leave other buildings
+
+No I think it’s the opposite - instantly complete any that haven’t finished by 10th of April and put them in the basebuilding list. Leave any that have already finished in the queue
+
+
+
+
+if buildings finish after the test_date, just build them now
+select * from constructionqueue natural join buildingcost where (start_date + build_time) > '2023-04-10';
+
+
+
+
+
+
+
+
+
+
+declare variable called test_date
+assign date 10th april 2023 to it
+checks each row in the construction_queue table
+
+if the construction has not been completed (start_date + build_time), 
+
+for record in the constructionqueue table, if start_data and build_time is in the past remove it and add it to basebuilding
+
+select *, (start_date + build_time) AS "Finish Date" from constructionqueue natural join buildingcost;
+
+select * from constructionqueue join buildingcost on constructionqueue.building_id = buildingcost.building_id  where (start_date + build_time) > '2023-04-10';
+
+select * from constructionqueue natural join buildingcost where (start_date + build_time) > '2023-04-10';
+
+SELECT *, (start_date + build_time) AS "Finish Date" FROM constructionqueue NATURAL JOIN buildingcost WHERE (start_date + build_time) > '2023-04-10';

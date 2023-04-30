@@ -1,0 +1,31 @@
+base
+base_id, player_id, level
+
+basebuilding
+building_id, base_id
+
+building
+building_id, building_name, building_description, resource_generated
+
+buildingcost
+building_id, resource_id, amount, build_time
+
+constructionqueue
+construction_id, building_id, base_id, start_date
+
+currency
+currency_id, currency_name, premium
+
+player
+player_id, player_name, player_password
+
+playercurrency
+player_id, currency_id, amount
+
+playerresource
+player_id, resource_id, amount
+
+resource
+resource_id, resource_name
+
+'C:\Users\Blinks\Desktop\Uni Work\SWW2\Assigmnent 3\test-data\csv\
